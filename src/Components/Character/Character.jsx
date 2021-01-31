@@ -2,9 +2,6 @@ import React from "react";
 import "./style.css";
 
 class Character extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { name, picture, status, race, lastLocation, origin } = this.props;
     return (
