@@ -14,34 +14,33 @@ class App extends React.Component {
         this.setState({
           characterList: data.results,
         });
+        const pagination = (URL) => {
+          fetch(URL)
+            .then((response) => response.json())
+            .then((data) => {
+              const maxNumberOfPages = data.info.pages;
+              const numberOfPage = data.info.next
+                .split("")
+                .filter((val) => val.match("^[0-9]+$"))
+                .join("");
+              if (numberOfPage < maxNumberOfPages) {
+                const nextURL = `https://rickandmortyapi.com/api/character/?page=${numberOfPage}`;
+                fetch(nextURL)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    this.setState({
+                      characterList: [
+                        ...this.state.characterList,
+                        data.results,
+                      ].flat(),
+                    });
+                  });
+                pagination(nextURL);
+              }
+            });
+        };
+        pagination("https://rickandmortyapi.com/api/character/");
       });
-
-    const pagination = (URL) => {
-      fetch(URL)
-        .then((response) => response.json())
-        .then((data) => {
-          const maxNumberOfPages = data.info.pages;
-          const numberOfPage = data.info.next
-            .split("")
-            .filter((val) => val.match("^[0-9]+$"))
-            .join("");
-          if (numberOfPage < maxNumberOfPages) {
-            const nextURL = `https://rickandmortyapi.com/api/character/?page=${numberOfPage}`;
-            fetch(nextURL)
-              .then((response) => response.json())
-              .then((data) => {
-                this.setState({
-                  characterList: [
-                    ...this.state.characterList,
-                    data.results,
-                  ].flat(),
-                });
-              });
-            pagination(nextURL);
-          }
-        });
-    };
-    pagination("https://rickandmortyapi.com/api/character/");
   }
 
   render() {
