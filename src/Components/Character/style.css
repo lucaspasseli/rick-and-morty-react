@@ -1,0 +1,24 @@
+.Card {
+  background-color: rgb(60, 62, 68);
+  border-radius: 20px;
+  margin: 20px;
+  padding-bottom: 40px;
+}
+
+.Card__Picture {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.Card__Name {
+  border-radius: 20px;
+  border: 1px solid yellow;
+  color: rgb(255, 178, 35);
+  padding: 5px;
+  max-width: 100px;
+  margin: 10px auto;
+}
+
+.Card__Title {
+  color: rgb(40, 138, 151);
+}
