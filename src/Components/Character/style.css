@@ -1,8 +1,12 @@
 .Card {
-  background-color: rgb(60, 62, 68);
+  background: linear-gradient(to bottom, #4b4a4a, #000);
   border-radius: 20px;
+  border: 1px solid rgb(129, 129, 129);
+  box-shadow: 5px 5px 10px #9c9c9c;
   margin: 20px;
   padding-bottom: 40px;
+  color: #fff;
+  font-weight: bold;
 }
 
 .Card__Picture {
@@ -12,13 +16,13 @@
 
 .Card__Name {
   border-radius: 20px;
-  border: 1px solid yellow;
-  color: rgb(255, 178, 35);
-  padding: 5px;
+  color: rgb(245, 208, 89);
+  padding: 10px;
   max-width: 100px;
-  margin: 10px auto;
+  margin: 20px auto;
+  font-size: 1.2rem;
 }
 
 .Card__Title {
-  color: rgb(40, 138, 151);
+  color: rgb(119, 237, 253);
 }

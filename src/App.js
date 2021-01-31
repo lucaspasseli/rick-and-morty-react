@@ -46,7 +46,8 @@ class App extends React.Component {
   render() {
     const { characterList } = this.state;
     return (
-      <div>
+      <div className="Container">
+        <h1>All Rick and Morty Characters</h1>
         <CharacterList list={characterList} />
       </div>
     );
