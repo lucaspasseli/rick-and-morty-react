@@ -5,49 +5,42 @@ import CharacterList from "./Components/CharacterList/CharacterList";
 class App extends React.Component {
   state = {
     characterList: [],
+    nextUrl: "https://rickandmortyapi.com/api/character/?page=1",
+    count: 0,
   };
 
-  componentDidMount() {
-    fetch("https://rickandmortyapi.com/api/character/")
+  getCharacter(Url) {
+    fetch(Url)
       .then((response) => response.json())
       .then((data) => {
+        const { characterList, count } = this.state;
         this.setState({
-          characterList: data.results,
+          characterList: [...characterList, ...data.results],
+          nextUrl: data.info.next,
+          count: count + data.results.length,
         });
-        const pagination = (URL) => {
-          fetch(URL)
-            .then((response) => response.json())
-            .then((data) => {
-              const maxNumberOfPages = data.info.pages;
-              const numberOfPage = data.info.next
-                .split("")
-                .filter((val) => val.match("^[0-9]+$"))
-                .join("");
-              if (numberOfPage < maxNumberOfPages) {
-                const nextURL = `https://rickandmortyapi.com/api/character/?page=${numberOfPage}`;
-                fetch(nextURL)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    this.setState({
-                      characterList: [
-                        ...this.state.characterList,
-                        data.results,
-                      ].flat(),
-                    });
-                  });
-                pagination(nextURL);
-              }
-            });
-        };
-        pagination("https://rickandmortyapi.com/api/character/");
       });
   }
 
+  componentDidMount() {
+    const { nextUrl } = this.state;
+    this.getCharacter(nextUrl);
+  }
+
+  componentDidUpdate() {
+    const { nextUrl } = this.state;
+    nextUrl && this.getCharacter(nextUrl);
+  }
   render() {
-    const { characterList } = this.state;
+    const { characterList, count } = this.state;
     return (
       <div className="Container">
-        <h1>All Rick and Morty Characters</h1>
+        <div>
+          <h1>All Rick and Morty Characters</h1>
+          <h3>
+            Total number of Chacarcters: <span className="Count">{count}</span>
+          </h3>
+        </div>
         <CharacterList list={characterList} />
       </div>
     );
